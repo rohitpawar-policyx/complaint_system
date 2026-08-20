@@ -1,0 +1,344 @@
+I am building a Complaint Management System using:
+
+- Core/plain PHP
+- MySQL
+- HTML
+- CSS
+- Vanilla JavaScript
+- SweetAlert where useful
+
+IMPORTANT:
+This is NOT Laravel and should NOT become a Laravel clone.
+
+Do not introduce:
+- Laravel
+- Symfony
+- MVC frameworks
+- ORM
+- unnecessary Composer packages
+- unnecessary design patterns
+- unnecessary abstractions
+
+The project should use a FEATURE-FIRST architecture with a small SHARED infrastructure layer.
+
+==================================================
+PROJECT STRUCTURE
+==================================================
+
+complaint-system/
+│
+├── app/
+│   │
+│   ├── auth/
+│   │   ├── register/
+│   │   ├── login/
+│   │   └── logout/
+│   │
+│   ├── profile/
+│   │
+│   ├── dashboard/
+│   │
+│   ├── complaints/
+│   │   ├── create/
+│   │   ├── list/
+│   │   └── details/
+│   │
+│   ├── admin/
+│   │   ├── dashboard/
+│   │   ├── users/
+│   │   ├── roles/
+│   │   ├── reasons/
+│   │   ├── complaints/
+│   │   └── complaint-history/
+│   │
+│   └── shared/
+│       ├── validation/
+│       ├── authorization/
+│       ├── middleware/
+│       ├── security/
+│       ├── helpers/
+│       └── ui/
+│
+├── config/
+│   └── database.php
+│
+├── assets/
+│   ├── css/
+│   │   └── main.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│
+├── storage/
+│   └── uploads/
+│
+└── index.php
+
+
+==================================================
+ARCHITECTURE RULES
+==================================================
+
+1. Keep feature-specific code inside its feature.
+
+2. Do NOT force every feature to contain:
+   Form + API + Service + CSS + JS.
+
+Only create files that are actually required.
+
+For example, a simple feature may contain:
+
+reasons/
+├── reasonList.php
+├── reasonForm.php
+├── reasonService.php
+└── reason.css
+
+If JavaScript is not required, do not create a JS file.
+
+If a separate API/request-handler is unnecessary, do not create one.
+
+3. If code is reusable by multiple features, move it into app/shared/.
+
+4. Keep database connection centralized in:
+
+config/database.php
+
+Do not create duplicate database connection files.
+
+5. Use PDO and prepared statements everywhere.
+
+6. Never concatenate user input into SQL.
+
+7. Keep presentation separate from business/database logic.
+
+8. Forms/views should primarily contain presentation.
+
+9. Request handlers should handle HTTP input/output.
+
+10. Services should contain business logic and database operations when a service layer is useful.
+
+11. Do not over-engineer simple features.
+
+12. Passwords must use:
+password_hash()
+password_verify()
+
+13. Use PHP sessions for authentication.
+
+14. Regenerate session ID after successful login.
+
+15. Authentication and authorization are separate.
+
+Authentication:
+"Who is this user?"
+
+Authorization:
+"What can this user do?"
+
+16. User status and role are separate.
+
+User status:
+- pending
+- approved
+- blocked
+
+17. Never allow the frontend to choose or modify:
+- user_id
+- role
+- account status
+- complaint priority
+- complaint ownership
+- performed_by
+
+18. Complaint priority must be calculated SERVER-SIDE from the selected complaint reason.
+
+19. Complaint history must be an audit trail.
+
+20. Multiple attachments are supported.
+
+21. Uploaded files must be validated server-side.
+
+22. Use htmlspecialchars() when displaying user-controlled data.
+
+23. Use CSRF protection for state-changing requests.
+
+24. Use reusable authorization/middleware rather than duplicating checks everywhere.
+
+25. Common UI behavior belongs in assets/js/main.js.
+
+26. Common CSS belongs in assets/css/main.css.
+
+27. Feature-specific CSS/JS belongs to that feature only when needed.
+
+28. Do not use inline CSS.
+
+29. Do not use inline JavaScript unless absolutely necessary.
+
+30. SweetAlert should be centralized/reusable rather than duplicated throughout the application.
+
+==================================================
+BUSINESS REQUIREMENTS
+==================================================
+
+This is a policy-related complaint system.
+
+USER WEBSITE:
+
+- Home
+- Dummy policy content for now
+- Register
+- Login
+- Logout
+- Dashboard
+- Profile
+- User status
+- User role
+- Raise complaint
+- Complaint reason dropdown
+- Complaint message
+- Multiple attachments
+- Server-side complaint priority
+- Complaint list
+- Complaint details
+
+ADMIN PANEL:
+
+- Admin dashboard
+- Counts
+- Quick links
+- User management
+- Role management
+- Complaint reason management
+- Complaint management
+- Complaint assignment
+- Complaint status changes
+- Complaint filters
+- Complaint details
+- Complaint history/audit trail
+
+
+==================================================
+DATABASE REQUIREMENTS
+==================================================
+
+Design a proper MySQL database for at least:
+
+users
+roles
+complaint_reasons
+complaints
+complaint_attachments
+complaint_history
+
+Relationships must use proper foreign keys and indexes.
+
+users:
+- id
+- name
+- email
+- password
+- status
+- role_id
+- timestamps
+
+roles:
+- id
+- name
+- description
+- timestamps
+
+complaint_reasons:
+- id
+- name
+- description
+- priority
+- active
+- timestamps
+
+complaints:
+- id
+- user_id
+- reason_id
+- message
+- priority
+- status
+- assigned_to
+- timestamps
+
+complaint_attachments:
+- id
+- complaint_id
+- original_name
+- stored_name
+- file_path
+- mime_type
+- file_size
+- timestamps
+
+complaint_history:
+- id
+- complaint_id
+- action
+- old_status
+- new_status
+- assigned_from
+- assigned_to
+- performed_by
+- description
+- created_at
+
+
+==================================================
+IMPORTANT COMPLAINT RULE
+==================================================
+
+The user selects a reason.
+
+Example:
+
+Policy Violation → HIGH
+General Inquiry → LOW
+Documentation Issue → MEDIUM
+
+The frontend must NOT submit priority.
+
+Server flow:
+
+reason_id
+↓
+load reason from database
+↓
+read priority from database
+↓
+create complaint with that priority
+
+Never trust frontend priority.
+
+
+==================================================
+DEVELOPMENT APPROACH
+==================================================
+
+Before changing code:
+
+1. Inspect the existing project.
+2. Inspect existing files.
+3. Do not overwrite working code unnecessarily.
+4. Reuse existing code when appropriate.
+5. Tell me what you intend to create/change.
+6. Then implement.
+
+Start by inspecting the current project.
+
+Then:
+
+1. Fix/establish config/database.php.
+2. Design the database.
+3. Create the SQL schema.
+4. Establish only the shared infrastructure actually required.
+5. Do not implement the entire application yet.
+
+Do not create hundreds of empty files.
+
+Keep the architecture simple and maintainable.

@@ -1,0 +1,148 @@
+Perform a complete FINAL AUDIT of the Complaint Management System.
+
+Do not make changes yet.
+
+Inspect the entire project.
+
+==================================================
+FUNCTIONAL AUDIT
+==================================================
+
+Verify:
+
+AUTHENTICATION
+- register
+- login
+- logout
+- pending user handling
+- approved user handling
+- blocked user handling
+- password hashing
+
+PROFILE
+- view profile
+- update profile
+- email uniqueness
+
+USER COMPLAINTS
+- create complaint
+- reason selection
+- server-side priority
+- attachments
+- complaint list
+- complaint details
+- ownership restrictions
+
+ADMIN
+- dashboard
+- users CRUD
+- roles CRUD
+- reasons CRUD
+- complaint list
+- status filters
+- priority filters
+- assignment
+- status changes
+- complaint details
+- complaint history
+
+
+==================================================
+SECURITY AUDIT
+==================================================
+
+Check for:
+
+- SQL injection
+- XSS
+- CSRF
+- authentication bypass
+- authorization bypass
+- privilege escalation
+- IDOR
+- insecure direct object references
+- user_id manipulation
+- role manipulation
+- status manipulation
+- priority manipulation
+- unsafe file uploads
+- path traversal
+- session fixation
+- session hijacking risks
+- unsafe redirects
+- plaintext passwords
+- sensitive information leakage
+
+
+==================================================
+BUSINESS RULE AUDIT
+==================================================
+
+Verify:
+
+1. User cannot choose their own role.
+
+2. User cannot choose their own account status.
+
+3. User cannot choose complaint priority.
+
+4. Complaint priority comes from complaint_reasons.
+
+5. User can only see their own complaints.
+
+6. User cannot change administrative complaint data.
+
+7. Admin authorization is server-side.
+
+8. Complaint assignments create history.
+
+9. Complaint status changes create history.
+
+10. History cannot be manually fabricated from frontend input.
+
+11. performed_by always comes from authenticated session.
+
+12. Attachment ownership/access is protected.
+
+
+==================================================
+ARCHITECTURE AUDIT
+==================================================
+
+Check:
+
+- feature-first structure
+- shared infrastructure
+- no duplicate database connections
+- no SQL inside presentation files where avoidable
+- no unnecessary abstractions
+- no unnecessary files
+- no duplicate validation logic
+- no duplicate authorization logic
+- no duplicated SweetAlert logic
+- sensible relative paths
+- maintainable code
+
+
+==================================================
+OUTPUT
+==================================================
+
+Do NOT modify files yet.
+
+Give me a report divided into:
+
+CRITICAL
+HIGH
+MEDIUM
+LOW
+GOOD
+
+For every issue, provide:
+
+- file
+- problem
+- why it matters
+- recommended fix
+
+Only after I approve the audit should you make changes.

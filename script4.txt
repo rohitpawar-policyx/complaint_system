@@ -1,0 +1,128 @@
+Now perform a SHARED INFRASTRUCTURE AND SECURITY PASS over the entire project.
+
+Do not redesign the application.
+
+Focus on reusable infrastructure and consistency.
+
+==================================================
+AUTHORIZATION
+==================================================
+
+Review and improve:
+
+app/shared/authorization/
+app/shared/middleware/
+
+Ensure:
+
+- authentication checks are reusable
+- admin authorization is reusable
+- role checks are server-side
+- permissions are not trusted from frontend
+- protected routes cannot be accessed directly by unauthorized users
+
+
+==================================================
+SECURITY
+==================================================
+
+Review and implement where missing:
+
+- CSRF protection
+- secure session handling
+- session regeneration
+- XSS protection
+- prepared statements
+- password hashing
+- authorization checks
+- safe redirects
+- safe file uploads
+- path traversal protection
+- access control for attachments
+
+Do not expose database credentials.
+
+
+==================================================
+FILE UPLOAD SECURITY
+==================================================
+
+Review all attachment handling.
+
+Ensure:
+
+- files are stored safely
+- stored filenames are generated server-side
+- original filenames are treated as untrusted data
+- dangerous executable files cannot be uploaded
+- file size limits exist
+- server-side validation exists
+- users cannot access another user's attachments without authorization
+- admin access is authorized
+
+
+==================================================
+SWEETALERT / UI
+==================================================
+
+Review:
+
+assets/js/main.js
+assets/css/main.css
+app/shared/ui/
+
+Centralize reusable:
+
+- success alerts
+- error alerts
+- confirmation dialogs
+- modal behavior
+- common UI behavior
+
+Do not duplicate SweetAlert configuration throughout the application.
+
+Do not use inline CSS.
+
+Do not use unnecessary inline JavaScript.
+
+
+==================================================
+ARCHITECTURE REVIEW
+==================================================
+
+Check every feature.
+
+Do NOT require every feature to have:
+
+Form
+API
+Service
+CSS
+JS
+
+Remove unnecessary files only if safe.
+
+Keep simple features simple.
+
+Move genuinely reusable logic to app/shared/.
+
+Do not move feature-specific business logic into shared.
+
+
+==================================================
+IMPORTANT
+==================================================
+
+Do not change business rules without telling me.
+
+Do not introduce a framework.
+
+Do not introduce unnecessary classes/design patterns.
+
+After completing the review, summarize:
+
+- files changed
+- security improvements
+- duplicated logic removed
+- shared functionality introduced
+- remaining concerns

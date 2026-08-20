@@ -1,0 +1,220 @@
+Now implement the complete USER SIDE of the Complaint Management System.
+
+Do not implement the admin panel yet.
+
+==================================================
+USER FEATURES
+==================================================
+
+Implement:
+
+1. Home
+2. Register
+3. Login
+4. Logout
+5. Dashboard
+6. Profile
+7. Raise Complaint
+8. Complaint List
+9. Complaint Details
+
+
+==================================================
+AUTHENTICATION
+==================================================
+
+Registration:
+
+- name
+- email
+- password
+- password confirmation
+- validation
+- unique email
+- password hashing
+- default status = pending
+- default role assigned server-side
+- user cannot choose role
+- user cannot choose status
+- CSRF protection
+
+Login:
+
+- email
+- password
+- validate credentials
+- password_verify()
+- blocked users cannot log in
+- pending users must follow the agreed business rule
+- approved users can access the system
+- regenerate session ID after login
+- never store password in session
+
+Logout:
+
+- destroy/invalidate session safely
+- redirect to login
+
+
+==================================================
+PROFILE
+==================================================
+
+Authenticated user can:
+
+- view profile
+- update name
+- update email
+
+Do not allow profile page to change:
+
+- role
+- status
+- user ID
+
+User ID must come from session.
+
+Check email uniqueness server-side.
+
+
+==================================================
+USER DASHBOARD
+==================================================
+
+Show useful information such as:
+
+- total complaints
+- pending complaints
+- in-progress complaints
+- resolved complaints
+
+Add quick links:
+
+- Raise Complaint
+- My Complaints
+- My Profile
+
+
+==================================================
+RAISE COMPLAINT
+==================================================
+
+Form:
+
+- reason dropdown
+- message
+- multiple attachments
+
+Reason dropdown must load active reasons from database.
+
+User submits reason_id only.
+
+Server must:
+
+1. Validate authenticated user.
+2. Validate reason.
+3. Load reason from database.
+4. Determine priority from database.
+5. Determine initial complaint status server-side.
+6. Create complaint.
+7. Create complaint history record.
+8. Process attachments safely.
+
+Never trust frontend:
+
+- user_id
+- priority
+- status
+- role
+- ownership
+
+
+==================================================
+ATTACHMENTS
+==================================================
+
+Support multiple attachments.
+
+Requirements:
+
+- server-side validation
+- safe filenames
+- unique stored filenames
+- do not trust original filename
+- do not trust client MIME type
+- validate extension/type appropriately
+- validate file size
+- protect against executable uploads
+- store files under storage/uploads/
+- store metadata in database
+
+
+==================================================
+USER COMPLAINT LIST
+==================================================
+
+Users can only see their OWN complaints.
+
+Show:
+
+- complaint ID
+- reason
+- priority
+- status
+- created date
+- updated date
+
+Never trust user_id from GET/POST.
+
+Use authenticated session user ID.
+
+
+==================================================
+USER COMPLAINT DETAILS
+==================================================
+
+Show:
+
+- complaint ID
+- reason
+- priority
+- status
+- message
+- attachments
+- created date
+- updated date
+- relevant history
+
+User cannot:
+
+- change priority
+- assign complaint
+- change administrative status
+- view another user's complaint
+
+
+==================================================
+UI
+==================================================
+
+Create a clean professional interface.
+
+Use:
+
+- responsive layout
+- reusable main.css
+- feature CSS only when needed
+- reusable main.js
+- SweetAlert for appropriate success/error confirmations
+- no inline CSS
+- no unnecessary JavaScript
+
+Use consistent buttons, forms, cards, alerts, tables and navigation.
+
+Do not create unnecessary files.
+
+For each feature, use only the files actually needed.
+
+Keep presentation, request handling and business/database logic separated appropriately.
+
+Before implementing, inspect the existing project and reuse existing architecture.
